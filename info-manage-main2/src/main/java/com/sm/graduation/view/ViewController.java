@@ -7,6 +7,8 @@ import com.sm.graduation.admin.pojo.AdminInfo;
 import com.sm.graduation.admin.service.AdminInfoService;
 import com.sm.graduation.checkin.pojo.CheckIn;
 import com.sm.graduation.checkin.service.CheckInService;
+import com.sm.graduation.complaint.pojo.Complaint;
+import com.sm.graduation.complaint.service.ComplaintService;
 import com.sm.graduation.dormitory.pojo.DormitoryAllocation;
 import com.sm.graduation.dormitory.service.DormitoryAllocationService;
 import com.sm.graduation.food.pojo.MonthlyCatering;
@@ -23,6 +25,7 @@ import com.sm.graduation.older.pojo.OlderInfo;
 import com.sm.graduation.older.service.OlderInfoService;
 import com.sm.graduation.out.pojo.GoOut;
 import com.sm.graduation.out.service.GoOutService;
+import com.sm.graduation.registry.service.RegistryService;
 import com.sm.graduation.test.pojo.Test;
 import com.sm.graduation.test.service.TestService;
 import com.sm.graduation.usr.pojo.UsrInfo;
@@ -37,7 +40,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
-/** 试图跳转 */
+/** 视图跳转 */
 
 @Controller
 @RequestMapping("/view")
@@ -85,6 +88,12 @@ public class ViewController {
     @Autowired
     private TestService testService;
 
+    @Autowired
+    private RegistryService registryService;
+
+    @Autowired
+    private ComplaintService complaintService;
+
 
     /** 首页跳转 **/
     @GetMapping("/welcome")
@@ -95,6 +104,11 @@ public class ViewController {
     @GetMapping("/welcome1")
     public String welcome1() {
         return "page/welcome1";
+    }
+
+    @GetMapping("/fabric")
+    public String fabric() {
+        return "page/fabric";
     }
 
     /** admin --- list */
@@ -186,6 +200,16 @@ public class ViewController {
         return "page/test";
     }
 
+    @GetMapping("/registry")
+    public String registry(){
+        return "page/registry";
+    }
+
+    /** 投诉 */
+    @GetMapping("/complaint")
+    public String complaint(){
+        return "page/complaint";
+    }
 
 
     //===============跳转模块： 添加功能===================
@@ -271,8 +295,10 @@ public class ViewController {
         return "page/add/addTest";
     }
 
-
-
+    @GetMapping("/addComplaint")
+    public String addComplaint(){
+        return "page/add/addComplaint";
+    }
 
     //================编辑功能==================
 
@@ -397,6 +423,15 @@ public class ViewController {
         model.addAttribute("test",test);
         return "page/modify/modifyTest";
     }
+
+    @GetMapping("/modifyComplaint")
+    public String modifyComplaint(@RequestParam(value = "id") long id,
+                             Model model){
+        Complaint complaint = complaintService.getById(id);
+        model.addAttribute("complaint",complaint);
+        return "page/modify/modifyComplaint";
+    }
+
 
 
 

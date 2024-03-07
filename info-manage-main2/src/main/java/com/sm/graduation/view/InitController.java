@@ -16,6 +16,10 @@ public class InitController {
         return "login";
     }
 
+//    注册跳转
+    @GetMapping("/registry")
+    public String registry(){return  "registry";}
+
     /** 首页跳转 **/
     @GetMapping("/indexR")
     public String indexr() {

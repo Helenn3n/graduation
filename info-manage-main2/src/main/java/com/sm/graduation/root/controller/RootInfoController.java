@@ -11,6 +11,8 @@ import com.sm.graduation.checkin.pojo.CheckIn;
 import com.sm.graduation.checkin.service.CheckInService;
 import com.sm.graduation.common.loginpojo.LoginPojo;
 import com.sm.graduation.common.result.AjaxResult;
+import com.sm.graduation.complaint.pojo.Complaint;
+import com.sm.graduation.complaint.service.ComplaintService;
 import com.sm.graduation.dormitory.pojo.DormitoryAllocation;
 import com.sm.graduation.dormitory.service.DormitoryAllocationService;
 import com.sm.graduation.food.pojo.MonthlyCatering;
@@ -27,6 +29,8 @@ import com.sm.graduation.older.pojo.OlderInfo;
 import com.sm.graduation.older.service.OlderInfoService;
 import com.sm.graduation.out.pojo.GoOut;
 import com.sm.graduation.out.service.GoOutService;
+import com.sm.graduation.registry.pojo.Registry;
+import com.sm.graduation.registry.service.RegistryService;
 import com.sm.graduation.test.pojo.Test;
 import com.sm.graduation.test.service.TestService;
 import com.sm.graduation.usr.pojo.UsrInfo;
@@ -99,6 +103,17 @@ public class RootInfoController {
 
     @Autowired
     private TestService testService;
+
+//    注册
+    @Autowired
+    private RegistryService registryService;
+
+    @Autowired
+    private ComplaintService complaintService;
+
+//    注册功能
+//    @RequestMapping('/registry')
+//    public AjaxResult registry(HttpServletRequest request, Registr)
 
     private boolean login;
     /** 登录验证 */
@@ -474,6 +489,28 @@ public class RootInfoController {
         return successData(page.getTotal(), tests);
     }
 
+    /** 投诉 */
+    @RequestMapping("/complaint")
+    public AjaxResult complaint(@RequestParam(defaultValue = "1", value = "page") Integer pageNum,
+                           @RequestParam(defaultValue = "10", value = "limit") Integer pageSize,
+                           @RequestParam(defaultValue = ""  , value = "year") String usr
+    ){
+        HashMap<String, Object> map = new HashMap<>();
+        PageHelper.startPage(pageNum,pageSize);
+        if (usr == null || usr.equals("")) {
+            map.put("usr","");
+            List<Complaint> complaints = complaintService.listAll(map);
+            PageInfo<Complaint> page = new PageInfo<>(complaints);
+            return successData(page.getTotal(), complaints);
+        }
+        map.put("usr",usr);
+        List<Complaint> complaints = complaintService.listAll(map);
+        PageInfo<Complaint> page = new PageInfo<>(complaints);
+        return successData(page.getTotal(), complaints);
+    }
+
+
+
 
 
     //==============添加功能=================
@@ -627,6 +664,26 @@ public class RootInfoController {
         return error("添加失败");
     }
 
+    @RequestMapping("/registry")
+    public AjaxResult registry(Registry registry){
+        System.out.println(registry);
+        int insert = registryService.insert(registry);
+        if (1 == insert){
+            return success("添加成功");
+        }
+        return error("添加失败");
+    }
+
+    @RequestMapping("/addComplaint")
+    public AjaxResult addComplaint(Complaint complaint){
+        System.out.println(complaint);
+        int insert = complaintService.insert(complaint);
+        if (1 == insert){
+            return success("添加成功");
+        }
+        return error("添加失败");
+    }
+
 
 
     //==============修改功能=================
@@ -759,6 +816,15 @@ public class RootInfoController {
     @RequestMapping("/modifyTest")
     public AjaxResult modifyTest(Test test){
         int update = testService.update(test);
+        if (1 == update){
+            return success("修改成功");
+        }
+        return error("修改失败");
+    }
+
+    @RequestMapping("/modifyComplaint")
+    public AjaxResult modifyComplaint(Complaint complaint){
+        int update = complaintService.update(complaint);
         if (1 == update){
             return success("修改成功");
         }
@@ -1051,6 +1117,27 @@ public class RootInfoController {
                 if (null != id && !"".equals(id)) {
                     System.out.println(id);
                     checkInService.delete(Integer.valueOf(id));
+                }
+            }
+        }
+        return success("删除成功");
+    }
+
+    //TODO:delComplaint
+    @RequestMapping("/delComplaint")
+    public AjaxResult delComplaint(@RequestParam(value = "id") Integer id){
+        complaintService.delete(id);
+        return success("删除成功");
+    }
+
+    @RequestMapping("/batchDelComplaint")
+    public AjaxResult batchDelComplaint(String listStr) {
+        if (null != listStr && !"".equals(listStr)) {
+            String[] ids = listStr.split(",");
+            for (String id : ids) {
+                if (null != id && !"".equals(id)) {
+                    System.out.println(id);
+                    complaintService.delete(Integer.valueOf(id));
                 }
             }
         }

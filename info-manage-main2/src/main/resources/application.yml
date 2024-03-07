@@ -27,3 +27,15 @@ pagehelper:
   support-methods-arguments: true
   params: count=countSql
 
+fabric:
+  network:
+    channelName: mychannel
+    configPath: /path/to/fabric/config
+  user:
+    mspId: Org1MSP
+    privateKeyPath: /path/to/private/key
+    certificatePath: /path/to/certificate
+  peers:
+    - name: peer0.org1.example.com
+      url: grpc://localhost:7051
+

@@ -1,7 +1,7 @@
 {
   "homeInfo": {
-    "title": "首页",
-    "href": "view/welcome"
+    "title": "监管部门首页",
+    "href": "view/fabric"
   },
   "logoInfo": {
     "title": "养老管理系统",
@@ -110,13 +110,13 @@
             {
               "title": "事故记录",
               "href": "view/accident",
-              "icon": "fa fa-list-alt",
+              "icon": "fa fa-tachometer",
               "target": "_self"
             },
             {
               "title": "访客记录",
               "href": "view/visitor",
-              "icon": "fa fa-navicon",
+              "icon": "fa fa-tachometer",
               "target": "_self"
             }
           ]
@@ -130,19 +130,39 @@
             {
               "title": "入住费用",
               "href": "view/checkIn",
-              "icon": "fa fa-stumbleupon-circle",
+              "icon": "fa fa-tachometer",
               "target": "_self"
             },
             {
               "title": "护理费用",
               "href": "view/nursing",
-              "icon": "fa fa-viacoin",
+              "icon": "fa fa-tachometer",
               "target": "_self"
             },
             {
               "title": "测试用例",
               "href": "view/test",
-              "icon": "fa fa-viacoin",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "投诉通道",
+          "href": "",
+          "icon": "fa fa-flag-o",
+          "target": "_self",
+          "child": [
+            {
+              "title": "客户投诉",
+              "href": "view/complaint",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            },
+            {
+              "title": "投诉反馈",
+              "href": "view/feedback",
+              "icon": "fa fa-tachometer",
               "target": "_self"
             }
           ]

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC
+        "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sm.graduation.registry.dao.RegistryMapper">
+
+    <select id="listAll" resultType="com.sm.graduation.registry.pojo.Registry">
+        select * from registry
+        <where>
+            <if test="usr!=''">elder_name like concat("%",#{usr},"%") </if>
+        </where>
+    </select>
+
+
+
+</mapper>

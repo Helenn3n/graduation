@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC
+        "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sm.graduation.complaint.dao.ComplaintMapper">
+
+    <select id="listAll" resultType="com.sm.graduation.complaint.pojo.Complaint">
+        select * from complaint
+        <where>
+            com_usr like concat("%",#{usr},"%")
+        </where>
+    </select>
+
+
+
+</mapper>
